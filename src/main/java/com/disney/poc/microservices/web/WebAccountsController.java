@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -90,6 +92,26 @@ public class WebAccountsController {
 			String searchText = criteria.getSearchText();
 			return ownerSearch(model, searchText);
 		}
+	}
+	
+	@RequestMapping("/rest/account/{accountNumber}")
+	public ResponseEntity<Account> accountsRESTCallByNumber(@PathVariable("accountNumber") String accountNumber) {
+		logger.info("web-service byNumber() invoked: " + accountNumber);
+
+		Account account = accountsService.findByNumber(accountNumber);
+		logger.info("web-service byNumber() found: " + account);
+		
+		return new ResponseEntity<Account>(account, HttpStatus.OK);
+	}
+	
+	@RequestMapping("/rest/accounts/owner/{text}")
+	public ResponseEntity<List<Account>> accountsRESTCallByOwner(@PathVariable("text") String name) {
+		logger.info("web-service byOwner() invoked: " + name);
+
+		List<Account> accounts = accountsService.byOwnerContains(name);
+		logger.info("web-service byOwner() found: " + accounts);
+		
+		return new ResponseEntity<List<Account>>(accounts, HttpStatus.OK);
 	}
 	
 }
