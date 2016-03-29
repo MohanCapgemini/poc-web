@@ -15,5 +15,13 @@
 	<properties>
 		<start-class>com.disney.poc.microservices.web.WebServer</start-class>
 	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>com.netflix.hystrix</groupId>
+  			<artifactId>hystrix-core</artifactId>
+  			<version>1.4.10</version>
+		</dependency>
+	</dependencies>
 
 </project>

@@ -14,6 +14,13 @@ public class Account {
 	protected String number;
 	protected String owner;
 	protected BigDecimal balance;
+	
+	public Account(Long id, String number, String owner, BigDecimal balance){
+		this.id=id;
+		this.number=number;
+		this.owner=owner;
+		this.balance=balance;
+	}
 
 	/**
 	 * Default constructor for JPA only.

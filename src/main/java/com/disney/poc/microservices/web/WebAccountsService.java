@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import com.disney.poc.microservices.hystrix.GetAccountInfoCommand;
+
 @Service
 public class WebAccountsService {
 
@@ -20,7 +22,7 @@ public class WebAccountsService {
 	protected RestTemplate restTemplate;
 
 	protected String serviceUrl;
-
+	
 	protected Logger logger = Logger.getLogger(WebAccountsService.class.getName());
 
 	public WebAccountsService(String serviceUrl) {
@@ -41,8 +43,10 @@ public class WebAccountsService {
 
 	public Account findByNumber(String accountNumber) {
 		logger.info("findByNumber() invoked: for " + accountNumber);
-		return restTemplate.getForObject(serviceUrl + "/accounts/{number}",
-				Account.class, accountNumber);
+		
+		return new GetAccountInfoCommand(restTemplate, serviceUrl + "/accounts/"+accountNumber).execute();
+		/*return restTemplate.getForObject(serviceUrl + "/accounts/{number}",
+				Account.class, accountNumber);*/
 	}
 
 	public List<Account> byOwnerContains(String name) {
