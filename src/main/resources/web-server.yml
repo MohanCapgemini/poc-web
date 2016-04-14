@@ -14,11 +14,17 @@ error:
 # Discovery Server Access
 eureka:
   client:
+    registryFetchIntervalSeconds: 1
     serviceUrl:
       defaultZone: ${eureka.registry.url}
   instance:
     preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 1
 
 # HTTP Server
 server:
   port: 3333   # HTTP (Tomcat) port
+  
+ribbon:
+    ServerListRefreshInterval: 1000
